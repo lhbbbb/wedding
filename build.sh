@@ -20,13 +20,13 @@ split_line=$(grep -n '^</style>$' "$SRC" | head -1 | cut -d: -f1)
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive">
-<meta name="description" content="김민준 · 이서연 결혼합니다. 2027년 4월 10일 토요일 낮 12시 30분, 그랜드컨벤션 3층 그랜드홀.">
-<meta name="theme-color" content="#eceee8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#19201d" media="(prefers-color-scheme: dark)">
+<meta name="description" content="이현빈 · 신연주 결혼합니다. 2027년 2월 28일 일요일 오전 11시, 더컨벤션 송파문정 12F 그랜드볼룸홀.">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#151b21" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="모바일 청첩장">
-<meta property="og:title" content="김민준 · 이서연 결혼합니다">
-<meta property="og:description" content="2027년 4월 10일 토요일 낮 12시 30분 · 그랜드컨벤션 3층 그랜드홀">
+<meta property="og:title" content="이현빈 · 신연주 결혼합니다">
+<meta property="og:description" content="2027년 2월 28일 일요일 오전 11시 · 더컨벤션 송파문정 12F 그랜드볼룸홀">
 <meta property="og:url" content="${URL}">
 <meta name="twitter:card" content="summary_large_image">
 <style>
