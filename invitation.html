@@ -108,6 +108,7 @@
   .cover .frame {
     width: 100%;
     aspect-ratio: 3 / 4;
+    overflow: hidden;
     max-width: 100%;
     border: 1px solid var(--rule);
     background:
@@ -123,6 +124,14 @@
     font-size: 0.78rem;
     letter-spacing: 0.3em;
     color: var(--ink-faint);
+  }
+  .cover .frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .vine { position: absolute; inset: auto 0 -1px 0; width: 100%; display: block; }
   .cover-names {
@@ -234,6 +243,8 @@
     width: 100%;
   }
   .gallery i {
+    position: relative;
+    overflow: hidden;
     aspect-ratio: 1;
     background: var(--paper-deep);
     border: 1px solid var(--rule);
@@ -243,6 +254,15 @@
     font-style: normal;
     font-size: 0.72rem;
     color: var(--ink-faint);
+  }
+  .gallery i::after { content: attr(data-n); }
+  .gallery img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .gallery i:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: 1; }
 
@@ -380,7 +400,7 @@
 
   <section class="cover">
     <p class="eyebrow">We're getting married</p>
-    <div class="frame" style="margin-top:22px"></div>
+    <div class="frame" style="margin-top:22px"><img src="photos/cover.jpg" alt="이현빈 신연주 표지 사진" onerror="this.remove()"></div>
     <p class="cover-names">이현빈<span class="amp">&amp;</span>신연주</p>
     <p class="cover-date">2027 . 02 . 28 &nbsp;SUN&nbsp; 11:00 AM</p>
     <p class="cover-place">더컨벤션 송파문정 12F 그랜드볼룸홀</p>
@@ -449,9 +469,15 @@
   <section>
     <p class="eyebrow">Gallery</p>
     <div class="gallery">
-      <i>01</i><i>02</i><i>03</i><i>04</i><i>05</i><i>06</i><i>07</i>
+      <i data-n="01"><img src="photos/01.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
+      <i data-n="02"><img src="photos/02.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
+      <i data-n="03"><img src="photos/03.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
+      <i data-n="04"><img src="photos/04.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
+      <i data-n="05"><img src="photos/05.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
+      <i data-n="06"><img src="photos/06.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
+      <i data-n="07"><img src="photos/07.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
     </div>
-    <p class="note">본식 전 촬영한 사진이 이 자리에 들어갑니다.</p>
+    <p class="note">사진을 넣기 전까지는 번호만 보입니다.</p>
   </section>
 
   <section>
