@@ -1,2 +1,6 @@
 *.swp
 .DS_Store
+
+# 사진 원본(용량이 커서 저장소에 올리지 않음)
+photos-src/
+.venv/

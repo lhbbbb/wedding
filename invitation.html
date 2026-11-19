@@ -237,34 +237,40 @@
 
   /* ── 갤러리 ───────────────────────────── */
   .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    display: flex;
+    gap: 8px;
     width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
-  .gallery i {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 1;
+  .gallery::-webkit-scrollbar { display: none; }
+  .gallery:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; }
+  .gallery figure {
+    flex: 0 0 72%;
+    margin: 0;
+    aspect-ratio: 2 / 3;
+    scroll-snap-align: start;
     background: var(--paper-deep);
     border: 1px solid var(--rule);
-    display: grid;
-    place-items: center;
-    font-family: var(--latin);
-    font-style: normal;
-    font-size: 0.72rem;
-    color: var(--ink-faint);
+    overflow: hidden;
   }
-  .gallery i::after { content: attr(data-n); }
   .gallery img {
-    position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
-  .gallery i:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: 1; }
+  .gcount {
+    font-family: var(--latin);
+    font-size: 0.82rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .gcount b { color: var(--sky); font-weight: 400; }
 
   /* ── 오시는 길 ─────────────────────────── */
   .venue-name { font-family: var(--kr-serif); font-size: 1.2rem; letter-spacing: 0.06em; }
@@ -468,16 +474,20 @@
 
   <section>
     <p class="eyebrow">Gallery</p>
-    <div class="gallery">
-      <i data-n="01"><img src="photos/01.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
-      <i data-n="02"><img src="photos/02.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
-      <i data-n="03"><img src="photos/03.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
-      <i data-n="04"><img src="photos/04.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
-      <i data-n="05"><img src="photos/05.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
-      <i data-n="06"><img src="photos/06.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
-      <i data-n="07"><img src="photos/07.jpg" alt="" loading="lazy" onerror="this.remove()"></i>
+    <div class="gallery" id="gallery" tabindex="0" role="group" aria-label="웨딩 사진 11장 — 좌우로 넘겨 보세요">
+      <figure><img src="photos/01.jpg" alt="웨딩 사진 1" width="900" height="1350" loading="eager"></figure>
+      <figure><img src="photos/02.jpg" alt="웨딩 사진 2" width="900" height="1350" loading="lazy"></figure>
+      <figure><img src="photos/03.jpg" alt="웨딩 사진 3" width="900" height="1350" loading="lazy"></figure>
+      <figure><img src="photos/04.jpg" alt="웨딩 사진 4" width="900" height="1350" loading="lazy"></figure>
+      <figure><img src="photos/05.jpg" alt="웨딩 사진 5" width="900" height="1350" loading="lazy"></figure>
+      <figure><img src="photos/06.jpg" alt="웨딩 사진 6" width="900" height="1350" loading="lazy"></figure>
+      <figure><img src="photos/07.jpg" alt="웨딩 사진 7" width="900" height="1350" loading="lazy"></figure>
+      <figure><img src="photos/08.jpg" alt="웨딩 사진 8" width="900" height="1350" loading="lazy"></figure>
+      <figure><img src="photos/09.jpg" alt="웨딩 사진 9" width="900" height="1350" loading="lazy"></figure>
+      <figure><img src="photos/10.jpg" alt="웨딩 사진 10" width="900" height="1350" loading="lazy"></figure>
+      <figure><img src="photos/11.jpg" alt="웨딩 사진 11" width="900" height="1350" loading="lazy"></figure>
     </div>
-    <p class="note">사진을 넣기 전까지는 번호만 보입니다.</p>
+    <p class="gcount"><b id="gnow">1</b> / 11 &nbsp;·&nbsp; 옆으로 넘겨 보세요</p>
   </section>
 
   <section>
@@ -593,6 +603,25 @@
       copy(url, "링크");
     }
   });
+
+  var gal = document.getElementById("gallery");
+  var gnow = document.getElementById("gnow");
+  if (gal && gnow) {
+    var shots = gal.querySelectorAll("figure");
+    var sync = function () {
+      var mid = gal.scrollLeft + gal.clientWidth / 2;
+      var best = 0, gap = Infinity;
+      for (var i = 0; i < shots.length; i++) {
+        var c = shots[i].offsetLeft + shots[i].offsetWidth / 2;
+        if (Math.abs(c - mid) < gap) { gap = Math.abs(c - mid); best = i; }
+      }
+      gnow.textContent = best + 1;
+    };
+    gal.addEventListener("scroll", function () {
+      if (gal.dataset.t) { cancelAnimationFrame(+gal.dataset.t); }
+      gal.dataset.t = requestAnimationFrame(sync);
+    }, { passive: true });
+  }
 
   var pad = function (n) { return n < 10 ? "0" + n : "" + n; };
   function tick() {
